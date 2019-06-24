@@ -1,5 +1,5 @@
-How to use Electronic Compass for RoboSail boats
-using Adafruit LSM303 3-axis magnetometer and 3-axis accelerometer
+# How to use Electronic Compass for RoboSail boats
+## using Adafruit LSM303 3-axis magnetometer and 3-axis accelerometer
 
 Find these programs in the "hardware --> compass" folder and use in this order:
 
@@ -17,15 +17,13 @@ The roll, pitch, yaw, and headings all use the standard (Aircraft)
 orientations:
 https://en.wikipedia.org/wiki/Aircraft_principal_axes
 
-A positive roll angle lifts the left wing and lowers the right wing.
-A positive pitch angle raises the nose and lowers the tail.
-A positive yaw, or heading angle, moves the nose to the right.
-
-A yaw of 0 degrees is pointing towards Magnetic North.
-
-Heading ranges from 0 to 360 degrees.
-A heading of 0 degrees is pointing towards True North.
-A heading of 90 degrees is pointing East, 180 is South, 270 is West.
+* A positive roll angle lifts the left wing and lowers the right wing.
+* A positive pitch angle raises the nose and lowers the tail.
+* A positive yaw, or heading angle, moves the nose to the right.
+* A yaw of 0 degrees is pointing towards Magnetic North.
+* Heading ranges from 0 to 360 degrees.
+* A heading of 0 degrees is pointing towards True North.
+* A heading of 90 degrees is pointing East, 180 is South, 270 is West.
 
 For RoboSail we change to a different frame of reference where East is 0 deg,
 North is 90 deg, West ia 180 deg, and South is 270 deg. To get this do 
