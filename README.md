@@ -27,15 +27,12 @@ Arduino Pin Code
 
 ```c++
 // Pin assignments
-const int ROBOSAIL_PIN_RUDDER_RC = 2;
-const int ROBOSAIL_PIN_SAIL_RC = 3;
-
-const int ROBOSAIL_PIN_WIND = 7;
-
+const int ROBOSAIL_PIN_RUDDER_RC    = 2;
+const int ROBOSAIL_PIN_SAIL_RC      = 3;
+const int ROBOSAIL_PIN_WIND         = 7;
 const int ROBOSAIL_PIN_RUDDER_SERVO = 8;
-const int ROBOSAIL_PIN_SAIL_SERVO = 9;
-
-const int ROBOSAIL_INTERRUPT_SAIL = 1;
+const int ROBOSAIL_PIN_SAIL_SERVO   = 9;
+const int ROBOSAIL_INTERRUPT_SAIL   = 1;
 const int ROBOSAIL_INTERRUPT_RUDDER = 0;
 ```
 
