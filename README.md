@@ -131,7 +131,7 @@ Absolute is relative to the world. East is 0, and it increases in the counter cl
 
 ## Parts of a sailboat
 
-![source: sailfree.com](http://www.sailfree.com/sailboats/_derived/sailboat.htm_txt_parts.gif)
+![source: sailfree.com](sailboat.htm_txt_parts.gif)
 
 
 ## Characterize the Servos
