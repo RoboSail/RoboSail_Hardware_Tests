@@ -6,7 +6,6 @@ specific to one sailboat's hardware
 
 */
 
-
 /********************** DEVICE INPUT AND OUTPUT ******************************/
 
 // input pins from receiver
@@ -47,3 +46,9 @@ const float ROBOSAIL_HARDIRON_Z = 33.32;
 // Compass declination
 // Source: http://www.ngdc.noaa.gov/geomag-web/#igrfwmm
 const float ROBOSAIL_DECLINATION = -14.6067;
+
+
+
+/**************************** Useful calcs ***********************************/
+
+void latLonToUTM(float lat, float lon, float *pos);

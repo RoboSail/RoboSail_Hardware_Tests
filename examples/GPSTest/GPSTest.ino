@@ -20,7 +20,6 @@ To run this code with the Arduino Uno, change "Serial1" to "Serial"
 
 #include <Adafruit_GPS.h>
 #include <SoftwareSerial.h>
-#include <UsefulCalcs.h>
 #include <RoboSail_Hardware_Tests.h>
 
 Adafruit_GPS GPS(ROBOSAIL_GPS_SERIAL_PORT);
@@ -30,9 +29,6 @@ bool print_raw_gps = false;
 
 // set to 'true' if you want to print the parsed GPS info to Serial console
 bool print_parsed_gps = true;
-
-// initialize utility that will convert lat/lon to (x,y) positions in meters
-UsefulCalcs calc(false);
 
 // this will be false until GPS fix is found and starting position saved
 bool start_pos_found = false;
@@ -93,7 +89,7 @@ void getposition()
   if (!start_pos_found)
   {
     // take in lat/lon degree values and return (x,y) in meters in pos array
-    calc.latLonToUTM(GPS.latitudeDegrees, GPS.longitudeDegrees, pos);
+    latLonToUTM(GPS.latitudeDegrees, GPS.longitudeDegrees, pos);
     startPositionX = pos[0];
     startPositionY = pos[1];
 
@@ -108,7 +104,7 @@ void getposition()
   else // starting position was found
   {
     // take in lat/lon degree values and return (x,y) in meters in pos array
-    calc.latLonToUTM(GPS.latitudeDegrees, GPS.longitudeDegrees, pos);
+    latLonToUTM(GPS.latitudeDegrees, GPS.longitudeDegrees, pos);
 
     // calculate the boat position relative to where it was started
     relPositionX = pos[0] - startPositionX;
