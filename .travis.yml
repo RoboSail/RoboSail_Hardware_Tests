@@ -1,0 +1,11 @@
+sudo: false
+language: ruby
+
+# Blacklist
+branches:
+  except:
+    - gh-pages
+
+script:
+  - bundle install
+  - bundle exec arduino_ci_remote.rb --skip-unittests
