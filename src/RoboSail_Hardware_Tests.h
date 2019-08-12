@@ -53,8 +53,6 @@ const float ROBOSAIL_HARDIRON_Z = 33.32;
 // Source: http://www.ngdc.noaa.gov/geomag-web/#igrfwmm
 const float ROBOSAIL_DECLINATION = -14.6067;
 
-/**************************** Useful calcs ***********************************/
 
-void latLonToUTM(float lat, float lon, float *pos);
 
 #endif

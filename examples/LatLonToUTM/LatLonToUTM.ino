@@ -7,6 +7,7 @@ It does the calculation once and then halts.
 */
 
 #include <RoboSail_Hardware_Tests.h>
+#include <UsefulCalcs.h>
 
 float pos[2];
 float lat = 42.36;

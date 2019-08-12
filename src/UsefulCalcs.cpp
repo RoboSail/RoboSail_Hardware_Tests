@@ -1,7 +1,5 @@
 
-#include "RoboSail_Hardware_Tests.h"
-
-// Implementation of RoboSail_Hardware_Tests.h
+#include "UsefulCalcs.h"
 
 // lat_lon_to_UTM expects to get [latitude, longitude] in decimal degrees
 // lat_lon_to_UTM calculates ([x, y], UTM_zone, southhemi)
