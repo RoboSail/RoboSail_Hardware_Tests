@@ -38,7 +38,9 @@ const int ROBOSAIL_PIN_WIND         = 7;
   HardwareSerial* const ROBOSAIL_SERIALPORT_GPS = &Serial;
 #endif
 
-
+// Interrupts
+const int ROBOSAIL_INTERRUPT_RUDDER = 0;
+const int ROBOSAIL_INTERRUPT_SAIL   = 1;
 
 /*************************** CALIBRATION DATA *******************************/
 
@@ -50,8 +52,6 @@ const float ROBOSAIL_HARDIRON_Z = 33.32;
 // Compass declination
 // Source: http://www.ngdc.noaa.gov/geomag-web/#igrfwmm
 const float ROBOSAIL_DECLINATION = -14.6067;
-
-
 
 /**************************** Useful calcs ***********************************/
 
