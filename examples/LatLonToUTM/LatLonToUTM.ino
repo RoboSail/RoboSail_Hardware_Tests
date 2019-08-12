@@ -18,7 +18,7 @@ void setup() {
 
 void loop() {
   // Call the calculator object
-  atLonToUTM(lat, lon, pos);
+  latLonToUTM(lat, lon, pos);
   Serial.print("Pos x: ");  Serial.println(pos[0]);
   Serial.print("Pos y: ");  Serial.println(pos[1]);
   delay(500);

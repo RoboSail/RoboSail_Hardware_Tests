@@ -38,7 +38,7 @@ void driveSailServo(int sailPos)
 void setup() {
   // Sets up communication with the serial monitor
   Serial.begin(115200);
-  sailServo.attach(ROBOSAIL_PIN_RUDDER_SAIL);
+  sailServo.attach(ROBOSAIL_PIN_SAIL_SERVO);
 }
 
 void loop() {

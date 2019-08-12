@@ -1,3 +1,5 @@
+#ifndef RoboSail_Hardware_Tests_h
+#define RoboSail_Hardware_Tests_h
 /*
 
 This file is included by all the hardware tests.
@@ -5,6 +7,8 @@ It records the pin assignments and calibration data
 specific to one sailboat's hardware
 
 */
+
+#include <Arduino.h>
 
 /********************** DEVICE INPUT AND OUTPUT ******************************/
 
@@ -27,11 +31,11 @@ const int ROBOSAIL_PIN_WIND         = 7;
 // A good source of board names that are known by the preprocessor is:
 //   https://arduino.stackexchange.com/a/21257/42393
 #if defined(ARDUINO_AVR_MEGA)
-  const HardwareSerial* ROBOSAIL_SERIALPORT_GPS = &Serial1;
+  HardwareSerial* const ROBOSAIL_SERIALPORT_GPS = &Serial1;
 #elif defined(ARDUINO_AVR_UNO)
-  const HardwareSerial* ROBOSAIL_SERIALPORT_GPS = &Serial;
+  HardwareSerial* const ROBOSAIL_SERIALPORT_GPS = &Serial;
 #else
-  const HardwareSerial* ROBOSAIL_SERIALPORT_GPS = &Serial;
+  HardwareSerial* const ROBOSAIL_SERIALPORT_GPS = &Serial;
 #endif
 
 
@@ -52,3 +56,5 @@ const float ROBOSAIL_DECLINATION = -14.6067;
 /**************************** Useful calcs ***********************************/
 
 void latLonToUTM(float lat, float lon, float *pos);
+
+#endif

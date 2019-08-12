@@ -58,7 +58,7 @@ void setup() {
     delay(2000); // wait and try again
   }
 
-  Serial.print("Your hardiron values are";
+  Serial.print("Your hardiron values are");
   Serial.print("  X: "); Serial.print(ROBOSAIL_HARDIRON_X);
   Serial.print("  Y: "); Serial.print(ROBOSAIL_HARDIRON_Y);
   Serial.print("  Z: "); Serial.print(ROBOSAIL_HARDIRON_Z);
