@@ -20,7 +20,7 @@ To run this code with the Arduino Uno, change "Serial1" to "Serial"
 
 #include <Adafruit_GPS.h>
 #include <SoftwareSerial.h>
-#include <RoboSail_Hardware_Tests.h>
+#include <RoboSail_Hardware.h>
 #include <UsefulCalcs.h>
 
 Adafruit_GPS GPS(ROBOSAIL_SERIALPORT_GPS);

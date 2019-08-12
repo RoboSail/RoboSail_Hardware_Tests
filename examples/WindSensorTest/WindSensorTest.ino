@@ -18,7 +18,7 @@ pointing forward.  Tighten the encoder body to the mount when the value reads 0.
 You will need a set of pliers and probably several tries.
 */
 
-#include <RoboSail_Hardware_Tests.h>
+#include <RoboSail_Hardware.h>
 
 
 int windAngle = 0;

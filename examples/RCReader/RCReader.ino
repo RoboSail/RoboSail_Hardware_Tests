@@ -17,7 +17,7 @@ digital pins 2 and 3 respectively.
 */
 
 #include <Servo.h>
-#include <RoboSail_Hardware_Tests.h>
+#include <RoboSail_Hardware.h>
 
 // variables to hold input values
 int rudderPulseWidth;

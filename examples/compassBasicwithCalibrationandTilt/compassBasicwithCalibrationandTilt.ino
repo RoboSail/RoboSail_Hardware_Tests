@@ -29,7 +29,7 @@ This code uses the orientation.cpp library where the calculations are done.
 #include <Wire.h>
 #include <Adafruit_Sensor.h>
 #include <Adafruit_LSM303_U.h>
-#include <RoboSail_Hardware_Tests.h>
+#include <RoboSail_Hardware.h>
 
 float roll;
 float pitch;

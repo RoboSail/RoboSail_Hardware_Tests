@@ -27,7 +27,7 @@ This accuracy sounds good, but realize that on 360 deg, it is up to +-18 deg.
 #include <Adafruit_Sensor.h>
 #include <Adafruit_LSM303_U.h>
 #include <Orientation.h>
-#include <RoboSail_Hardware_Tests.h>
+#include <RoboSail_Hardware.h>
 
 Adafruit_LSM303_Accel_Unified accel = Adafruit_LSM303_Accel_Unified(54321);
 Adafruit_LSM303_Mag_Unified mag = Adafruit_LSM303_Mag_Unified(12345);

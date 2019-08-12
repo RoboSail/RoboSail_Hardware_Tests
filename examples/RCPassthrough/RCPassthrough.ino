@@ -16,12 +16,12 @@ This program helps the user determine
   - if the servos are functioning correctly and moving to the expected positions
   - if the Arduino computer is functioning correctly
 
-Pins are configured in RoboSail_Hardware_Tests.h
+Pins are configured in RoboSail_Hardware.h
 
 */
 
 #include <Servo.h>
-#include <RoboSail_Hardware_Tests.h>
+#include <RoboSail_Hardware.h>
 
 // variables to hold input and output values
 int rudderPulseWidth;

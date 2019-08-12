@@ -1,5 +1,5 @@
-#ifndef RoboSail_Hardware_Tests_h
-#define RoboSail_Hardware_Tests_h
+#ifndef RoboSail_Hardware_h
+#define RoboSail_Hardware_h
 /*
 
 This file is included by all the hardware tests.
@@ -44,6 +44,8 @@ const int ROBOSAIL_INTERRUPT_SAIL   = 1;
 
 /*************************** CALIBRATION DATA *******************************/
 
+// Fill in these values based on the results of hardware testing
+
 // Compass hard iron calibration
 const float ROBOSAIL_HARDIRON_X = -8.41;
 const float ROBOSAIL_HARDIRON_Y = -8.00;
@@ -53,6 +55,16 @@ const float ROBOSAIL_HARDIRON_Z = 33.32;
 // Source: http://www.ngdc.noaa.gov/geomag-web/#igrfwmm
 const float ROBOSAIL_DECLINATION = -14.6067;
 
+// Rudder limits
+const int ROBOSAIL_RUDDER_LOW  = 1100;   //nominal 1000
+const int ROBOSAIL_RUDDER_HIGH = 1900;   //nominal 2000
 
+// Sail limits
+const int ROBOSAIL_SAIL_LOW  = 1000;    //nominal 1000
+const int ROBOSAIL_SAIL_HIGH = 2000;    //nominal 2000
+
+// Wind limits
+const int ROBOSAIL_WIND_LOW  = 0;       //nominal 0
+const int ROBOSAIL_WIND_HIGH = 1023;    //nominal 1023
 
 #endif

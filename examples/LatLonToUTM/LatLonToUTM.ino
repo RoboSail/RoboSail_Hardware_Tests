@@ -6,7 +6,7 @@ It does the calculation once and then halts.
 
 */
 
-#include <RoboSail_Hardware_Tests.h>
+#include <RoboSail_Hardware.h>
 #include <UsefulCalcs.h>
 
 float pos[2];
