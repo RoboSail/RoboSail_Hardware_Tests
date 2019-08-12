@@ -1,0 +1,17 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    arduino_ci (0.2.1)
+      os (~> 1.0)
+      rubyzip (~> 1.2)
+    os (1.0.1)
+    rubyzip (1.2.3)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  arduino_ci (~> 0.2.1)
+
+BUNDLED WITH
+   1.16.6

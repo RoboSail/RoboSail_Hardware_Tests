@@ -140,13 +140,96 @@ Record your values and use them in creating sailing algorithms.
 
 ## Reading and Checking the RC Transmitter/Receiver
 
-The Arduino Computer goes between the RC Transmitter/Receiver and the Servo Motors.  Use the program RCPassThru to check this communication.
+The 2-channel RadioControl (RC) Transmitter/Receiver pair come with the sailboat.
+The signals are originally used to directly control the servos. When the RoboSail
+control system is installed, the signals from the Receiver are routed through the
+Arduino, then processed before getting to the servo motors.
 
-The signal that is read in from the receiver is a  pulse read in with the pulseIn function. It typically goes from 1000 to 2000.   That number is mapped to the degrees that we define for the servo motion: The Rudder ranges -80 to +80 degrees with 0 at the center.  1000 maps to -80 while 2000 maps to +80 degrees. The Sailservo is a multiturn winch that we only use in 1 direction (so the line does not rewind in the other direction after unwinding). We define 0 degrees as the line (and the sail) is fully wound in and at 90 degrees the line (and the sail) is fully out. 1000 maps to 0 while 2000 maps to 90 degrees.
+Use the example program `RCPassThrough` to check this communication.
+
+To make automatic control, the outputs to the servo motors are based on the sensor
+inputs, not the user inputs.  When automatic control is implemented, the signals from the RC transmitter can be used to send switch signals or other cues to the boat to switch modes of operation.
+
+The Arduino Computer goes between the RC Transmitter/Receiver and the Servo Motors.
+The signal that is read in from the receiver is a pulse read in with the pulseIn function. It typically goes from 1000 to 2000.   That number is mapped to the degrees that we define for the servo motion: The Rudder ranges -80 to +80 degrees with 0 at the center.  1000 maps to -80 while 2000 maps to +80 degrees. The Sailservo is a multiturn winch that we only use in 1 direction (so the line does not rewind in the other direction after unwinding). We define 0 degrees as the line (and the sail) is fully wound in and at 90 degrees the line (and the sail) is fully out. 1000 maps to 0 while 2000 maps to 90 degrees.
 
 There is an additional step to create the proper command for the servo.  We need to create servo positions that correspond to the degree positions that we want.  Servos usually run from 0 to 180 degrees, however there may be physical limits that prevent full movement.  In this case, the rudder is a bit limited at the ends of its travel by the connecting rods.  The rudder servo has its center point at roughly 90 degrees.  The sail servo is at 90 when fully in, 90 when fully out, and 90 to 180 is not used as it would rewind the line.
 
 Once the correct servo positions are calculated, they are output to the servos by on-board PWM facilities.
+
+
+### `pulseIn()` vs ISR
+
+The issue with `pulseIn()` is that sometimes it misses the start of the pulse, which makes the resultant output very twitchy:
+
+`pulseIn()`
+```
+...
+rudder, pulse: 1523	angle: 94
+rudder, pulse: 1517	angle: 93
+rudder, pulse: 1517	angle: 93
+rudder, pulse: 1523	angle: 94
+rudder, pulse: 1517	angle: 93
+rudder, pulse: 1502	angle: 90
+rudder, pulse: 1484	angle: 87
+rudder, pulse: 1523	angle: 94
+rudder, pulse: 1517	angle: 93
+rudder, pulse: 1523	angle: 94
+rudder, pulse: 1517	angle: 93
+rudder, pulse: 1525	angle: 94
+rudder, pulse: 1517	angle: 93
+rudder, pulse: 1523	angle: 94
+rudder, pulse: 1525	angle: 94
+rudder, pulse: 1496	angle: 89
+rudder, pulse: 1492	angle: 88
+rudder, pulse: 1495	angle: 89
+rudder, pulse: 1523	angle: 94
+rudder, pulse: 1517	angle: 93
+...
+```
+
+An interrupt service routine (ISR) solves this problem by using built-in [interrupts](http://arduino.cc/en/Reference/AttachInterrupt) to more accurately monitor the pulses from the RC receiver.
+
+ISR
+```
+...
+rudder, pulse: 1508	angle: 91		sail, pulse: 1364	angle: 65
+rudder, pulse: 1508	angle: 91		sail, pulse: 1364	angle: 65
+rudder, pulse: 1508	angle: 91		sail, pulse: 1364	angle: 65
+rudder, pulse: 1508	angle: 91		sail, pulse: 1364	angle: 65
+rudder, pulse: 1504	angle: 91		sail, pulse: 1372	angle: 65
+rudder, pulse: 1504	angle: 90		sail, pulse: 1372	angle: 66
+rudder, pulse: 1504	angle: 90		sail, pulse: 1372	angle: 66
+rudder, pulse: 1504	angle: 90		sail, pulse: 1372	angle: 66
+rudder, pulse: 1504	angle: 90		sail, pulse: 1372	angle: 66
+rudder, pulse: 1508	angle: 91		sail, pulse: 1364	angle: 65
+...
+```
+
+Notice that now we've gone from +-39 to +-4. Much better!
+
+It's still not perfect, so a final solution might have a low pass filter that rejects small changes. Eg, something like:
+
+```
+if (abs((newValue - oldValue)) > 8) {
+   // Only assign if the difference is greater than 8 units.
+   result = newValue;
+}
+```
+
+
+### Testing
+
+Things to check when testing:
+
+1. What is the minimum and maximum RC angle for the sail channel? rudder channel?
+2. How does the RC transmitter trim affect the readings, for sail? for rudder?
+3. How does the RC transmitter ST Rate knob affect the readings, for sail? for rudder?
+
+### Credits
+
+PWM modified from [here](http://www.camelsoftware.com/firetail/blog/radio/reading-pwm-signals-from-a-remote-control-receiver-with-arduino/)
+
 
 ## Calibrate the Wind Sensor
 
@@ -167,6 +250,60 @@ Hardiron calibration must be performed. The process is simple:
 4. Average the minimum and maximum for each axis. This will give you your hardiron x,y,z offsets.
 
 (Need more data here about tilt-compensation)
+
+
+### How to use Adafruit LSM303 3-axis magnetometer and 3-axis accelerometer for RoboSail Boats
+
+Find these programs in the "hardware --> compass" folder and use in this order:
+
+1. compassBasic - verify hardware and connections prints raw accelerometer and magnetometer readings to the screen
+2. compassCalibration - Code to use to determine hard iron calibration values for other the programs
+3. compassBasicwithCalibration - same as CompassBasic with hardiron correction
+4. compassTest - Tilt-compensated compass with hard-iron correction.  Uses the Orientation library
+5. compassBasicwithCalibrationandTilt - same as CompassTest, but does the tilt-compensation in the code and does NOT require the Orientation library
+
+Find Orientation libraries in the folder Libraries --> Orientation:
+	Orientation.cpp - Library for tilt calibrated compass readings
+	Orientation.h - Header file for library
+
+The roll, pitch, yaw, and headings all use the standard (Aircraft)
+orientations:
+https://en.wikipedia.org/wiki/Aircraft_principal_axes
+
+* A positive roll angle lifts the left wing and lowers the right wing.
+* A positive pitch angle raises the nose and lowers the tail.
+* A positive yaw, or heading angle, moves the nose to the right.
+* A yaw of 0 degrees is pointing towards Magnetic North.
+* Heading ranges from 0 to 360 degrees.
+* A heading of 0 degrees is pointing towards True North.
+* A heading of 90 degrees is pointing East, 180 is South, 270 is West.
+
+For RoboSail we change to a different frame of reference where East is 0 deg,
+North is 90 deg, West ia 180 deg, and South is 270 deg. To get this do
+RoboSailHeading = (360 - heading) + 90
+We also use roll to find the heel of the boat.
+We define Positive roll as leaning to Port and Negative roll as leaning to Starboard.
+To get this simply negate roll.  RoboSailRoll = -1 * roll
+
+Because of the way the calculations are done, the heading will not be
+accurate if the pitch approaches 90 or -90, but that shouldn't be a
+problem (unless the boat is sinking it shouldn't be pointing straight up
+or down). We found the compass readings are accurate to about +-5% even if the
+boat is heeling at angles it would see in normal sailing.
+This accuracy sounds good, but realize that on 360 deg, it is up to +-18 deg.
+
+Thanks to:
+Benjamin Kraus, ben@kraus.info
+Cody Lewis, srlm@srlmproductions.com
+
+### Example outputs
+
+CompassCalibration code startup
+![CompassCalibration code startup](CompassCalibrationStartup.png)
+
+CompassCalibration operation, after rotating the compass to calibrate
+![CompassCalibration operation](CompassCalibrationOperation.png)
+
 
 ## GPS: Read
 

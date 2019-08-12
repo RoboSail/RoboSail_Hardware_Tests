@@ -1,0 +1,9 @@
+compile:
+  platforms:
+    - uno
+    - mega2560
+
+  libraries:
+    - Adafruit GPS Library
+    - Adafruit LSM303DLHC
+    - Adafruit Unified Sensor
