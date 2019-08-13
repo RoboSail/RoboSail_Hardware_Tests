@@ -1,4 +1,5 @@
 
+#include <Arduino.h>
 #include "UsefulCalcs.h"
 
 // lat_lon_to_UTM expects to get [latitude, longitude] in decimal degrees
