@@ -8,9 +8,9 @@ Adafruit_LSM303_Accel_Unified * Orientation::accl;
 Adafruit_LSM303_Mag_Unified * Orientation::magn;
 
 /** Use an eCompass algorithm to calculate orientation
- * 
+ *
  * The algorithm is based on http://cache.freescale.com/files/sensors/doc/app_note/AN4248.pdf
- * 
+ *
  * Hard iron calibration must be performed. The process is simple:
  *   1. Mount the magnetometer in the location that you intend to use it
  *   2. Slowly rotate the body through all possible orientations
@@ -40,10 +40,10 @@ Adafruit_LSM303_Mag_Unified * Orientation::magn;
  */
 void Orientation::calculate(float & roll, float & pitch, float & yaw, float & heading){
   // Get a new sensor event
-  sensors_event_t event_accl; 
-  sensors_event_t event_magn; 
+  sensors_event_t event_accl;
+  sensors_event_t event_magn;
 
-  accl->getEvent(&event_accl); 
+  accl->getEvent(&event_accl);
   magn->getEvent(&event_magn);
 
   // Signs choosen so that, when axis is down, the value is + 1g
@@ -59,25 +59,25 @@ void Orientation::calculate(float & roll, float & pitch, float & yaw, float & he
   // Signs should be choosen so that, when the axis is North/Down, the value is + positive.
   magn_y = -magn_y;
   magn_z = -magn_z;
-  
+
   // Freescale solution
   roll = atan2(accl_y, accl_z);
   pitch = atan(-accl_x / sqrt( pow(accl_y,2) + pow(accl_z,2) ) );
-  
+
   float magn_fy_fs = magn_z * sin(roll) - magn_y*cos(roll);
   float magn_fx_fs = magn_x * cos(pitch) + magn_y * sin(pitch) * sin(roll) + magn_z * sin(pitch) * cos(roll);
-  
+
   yaw = atan2(magn_fy_fs, magn_fx_fs);
-  
+
   roll = roll * RAD_CONV;
   pitch = pitch * RAD_CONV;
   yaw = yaw * RAD_CONV;
-  
+
   heading = yawToHeading(yaw);
 }
 
 /** Convert a yaw (-180 to 180) to a compass heading (0 to 360) with declination correction
- * 
+ *
  * @param yaw The input yaw, in degrees -180 to 180
  * @param declination the magnetic declination to adjust against, with sign. Note that this is time and location dependent.
  * @return the corrected heading, in degrees 0 to 360
