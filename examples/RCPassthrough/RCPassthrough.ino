@@ -16,12 +16,12 @@ This program helps the user determine
   - if the servos are functioning correctly and moving to the expected positions
   - if the Arduino computer is functioning correctly
 
-Pins are configured in RoboSail_Hardware_Tests.h
+Pins are configured in RoboSail_Hardware.h
 
 */
 
 #include <Servo.h>
-#include <RoboSail_Hardware_Tests.h>
+#include <RoboSail_Hardware.h>
 
 // variables to hold input and output values
 int rudderPulseWidth;
@@ -56,10 +56,10 @@ void loop() {
   // pulseIn returns the width of the command pulse in microseconds.
   rudderPulseWidth = pulseIn(ROBOSAIL_PIN_RUDDER_RC, HIGH);
   // Calculate the servo position in degrees.
-  rudderServoOut = map(rudderPulseWidth, 1000, 2000, -60, 60);
+  rudderServoOut = map(rudderPulseWidth, ROBOSAIL_RUDDER_LOW, ROBOSAIL_RUDDER_HIGH, -60, 60);
 
   sailPulseWidth = pulseIn(ROBOSAIL_PIN_SAIL_RC, HIGH);
-  sailServoOut = map(sailPulseWidth, 1090, 1900, 0, 90);
+  sailServoOut = map(sailPulseWidth, ROBOSAIL_SAIL_LOW, ROBOSAIL_SAIL_HIGH, 0, 90);
 
 
   // Print out the values for debug.

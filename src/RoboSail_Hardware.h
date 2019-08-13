@@ -1,5 +1,5 @@
-#ifndef RoboSail_Hardware_Tests_h
-#define RoboSail_Hardware_Tests_h
+#ifndef RoboSail_Hardware_h
+#define RoboSail_Hardware_h
 /*
 
 This file is included by all the hardware tests.
@@ -9,6 +9,11 @@ specific to one sailboat's hardware
 */
 
 #include <Arduino.h>
+
+// To ensure that settings are being read from this file, you can
+// print the boat name in your setup() function as follows:
+//   Serial.print("This boat is "); Serial.println(ROBOSAIL_BOAT_NAME);
+const String ROBOSAIL_BOAT_NAME = "My Example Boat";
 
 /********************** DEVICE INPUT AND OUTPUT ******************************/
 
@@ -38,11 +43,15 @@ const int ROBOSAIL_PIN_WIND         = 7;
   HardwareSerial* const ROBOSAIL_SERIALPORT_GPS = &Serial;
 #endif
 
-
+// Interrupts
+const int ROBOSAIL_INTERRUPT_RUDDER = 0;
+const int ROBOSAIL_INTERRUPT_SAIL   = 1;
 
 /*************************** CALIBRATION DATA *******************************/
 
-// Compass hard iron calibration
+// Fill in these values based on the results of hardware testing
+
+// Compass hard iron calibration using compassCalibration sketch
 const float ROBOSAIL_HARDIRON_X = -8.41;
 const float ROBOSAIL_HARDIRON_Y = -8.00;
 const float ROBOSAIL_HARDIRON_Z = 33.32;
@@ -51,10 +60,16 @@ const float ROBOSAIL_HARDIRON_Z = 33.32;
 // Source: http://www.ngdc.noaa.gov/geomag-web/#igrfwmm
 const float ROBOSAIL_DECLINATION = -14.6067;
 
+// Rudder limits using RCReader sketch
+const int ROBOSAIL_RUDDER_LOW  = 1100;   //nominal 1000
+const int ROBOSAIL_RUDDER_HIGH = 1900;   //nominal 2000
 
+// Sail limits using RCReader sketch
+const int ROBOSAIL_SAIL_LOW  = 1090;    //nominal 1000
+const int ROBOSAIL_SAIL_HIGH = 1900;    //nominal 2000
 
-/**************************** Useful calcs ***********************************/
-
-void latLonToUTM(float lat, float lon, float *pos);
+// Wind limits using WindSensorTest sketch
+const int ROBOSAIL_WIND_LOW  = 0;       //nominal 0
+const int ROBOSAIL_WIND_HIGH = 1023;    //nominal 1023
 
 #endif

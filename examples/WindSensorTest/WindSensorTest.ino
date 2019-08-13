@@ -18,7 +18,7 @@ pointing forward.  Tighten the encoder body to the mount when the value reads 0.
 You will need a set of pliers and probably several tries.
 */
 
-#include <RoboSail_Hardware_Tests.h>
+#include <RoboSail_Hardware.h>
 
 
 int windAngle = 0;
@@ -37,7 +37,7 @@ void loop() {
   windPulseWidth = pulseIn(ROBOSAIL_PIN_WIND, HIGH);
 
   // Convert the wind angle to degrees from PWM values.  Range -180 to +180
-  windAngle = map(windPulseWidth, 0, 1023, 180, -180);
+  windAngle = map(windPulseWidth, ROBOSAIL_WIND_LOW, ROBOSAIL_WIND_HIGH, 180, -180);
 
   // The sensor occasionally returns out of bounds values, so make sure that
   //   it fits within our desired range.

@@ -14,7 +14,7 @@
 */
 
 #include <Servo.h>
-#include <RoboSail_Hardware_Tests.h>
+#include <RoboSail_Hardware.h>
 
 Servo sailServo;    // define servo
 

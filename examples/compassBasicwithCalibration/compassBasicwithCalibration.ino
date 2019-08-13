@@ -14,13 +14,12 @@ Use the code to see that the wiring is set up correctly, the range of
 values coming in from the sensors,and to observe the values as you rotate/move
 the module.
 
-
 */
 
 #include <Wire.h>
 #include <Adafruit_Sensor.h>
 #include <Adafruit_LSM303_U.h>
-#include <RoboSail_Hardware_Tests.h>
+#include <RoboSail_Hardware.h>
 
 /* Assign a unique ID to this sensor at the same time */
 Adafruit_LSM303_Mag_Unified mag = Adafruit_LSM303_Mag_Unified(12345);

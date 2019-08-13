@@ -12,7 +12,7 @@ the module.
 #include <Wire.h>
 #include <Adafruit_Sensor.h>
 #include <Adafruit_LSM303_U.h>
-#include <RoboSail_Hardware_Tests.h>
+#include <RoboSail_Hardware.h>
 
 /* Assign a unique ID to this sensor */
 Adafruit_LSM303_Accel_Unified accel = Adafruit_LSM303_Accel_Unified(54321);
