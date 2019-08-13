@@ -1,4 +1,5 @@
 RoboSail Hardware Tests
+[![Build Status](https://travis-ci.org/RoboSail/RoboSail_Hardware_Tests.svg?branch=master)](https://travis-ci.org/RoboSail/RoboSail_Hardware_Tests)
 =======================
 
 
