@@ -14,7 +14,6 @@ Use the code to see that the wiring is set up correctly, the range of
 values coming in from the sensors,and to observe the values as you rotate/move
 the module.
 
-
 */
 
 #include <Wire.h>
