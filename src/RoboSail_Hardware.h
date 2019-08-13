@@ -10,6 +10,11 @@ specific to one sailboat's hardware
 
 #include <Arduino.h>
 
+// To ensure that settings are being read from this file, you can
+// print the boat name in your setup() function as follows:
+//   Serial.print("This boat is "); Serial.println(ROBOSAIL_BOAT_NAME);
+const String ROBOSAIL_BOAT_NAME = "My Example Boat";
+
 /********************** DEVICE INPUT AND OUTPUT ******************************/
 
 // input pins from receiver
