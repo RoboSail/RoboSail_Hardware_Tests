@@ -1,4 +1,4 @@
-/* ServoRudderTest rev 7/30/2017
+/* RudderServoTest rev 7/30/2017
    © 2014-2017 RoboSail
    Test the various rudder positions available by driving the
    rudder servo to positons entered by the user.
