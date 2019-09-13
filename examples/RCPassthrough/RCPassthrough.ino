@@ -25,8 +25,10 @@ Pins are configured in RoboSail_Hardware.h
 
 // variables to hold input and output values
 int rudderPulseWidth;
+int rudderDegrees;
 int rudderServoOut;
 int sailPulseWidth;
+int sailDegrees;
 int sailServoOut;
 
 //create servo objects
@@ -55,32 +57,41 @@ void loop() {
   // Read commanded (manual) values from the RC reciever
   // pulseIn returns the width of the command pulse in microseconds.
   rudderPulseWidth = pulseIn(ROBOSAIL_PIN_RUDDER_RC, HIGH);
-  // Calculate the servo position in degrees.
-  rudderServoOut = map(rudderPulseWidth, ROBOSAIL_RUDDER_RC_LOW, ROBOSAIL_RUDDER_RC_HIGH, -60, 60);
-
   sailPulseWidth = pulseIn(ROBOSAIL_PIN_SAIL_RC, HIGH);
-  sailServoOut = map(sailPulseWidth, ROBOSAIL_SAIL_RC_LOW, ROBOSAIL_SAIL_RC_HIGH, 0, 90);
+
+  // Calculate the commanded positions in degrees.
+  rudderDegrees = map(rudderPulseWidth,
+                      ROBOSAIL_RUDDER_RC_LOW, ROBOSAIL_RUDDER_RC_HIGH,
+                      ROBOSAIL_RUDDER_ANGLE_LOW, ROBOSAIL_RUDDER_ANGLE_HIGH);
+  sailDegrees = map(sailPulseWidth,
+                    ROBOSAIL_SAIL_RC_LOW, ROBOSAIL_SAIL_RC_HIGH,
+                    ROBOSAIL_SAIL_ANGLE_LOW, ROBOSAIL_SAIL_ANGLE_HIGH);
+
+  // calculate the commanded positions into servo angles on the Robosail boat
+  // the Rudder servo motor ranges from 0 to 180 with 90 deg in the center
+  // the Sailwinch servo is at ~ 55 deg when full-in, which we think of as 0 deg,
+  //  and ~125 deg when full out, which we thnk of as 90 deg
+  rudderServoOut = map(rudderPulseWidth,
+                       ROBOSAIL_RUDDER_RC_LOW, ROBOSAIL_RUDDER_RC_HIGH,
+                       ROBOSAIL_RUDDER_SERVO_LOW, ROBOSAIL_RUDDER_SERVO_HIGH);
+  sailServoOut = map(sailPulseWidth,
+                    ROBOSAIL_SAIL_RC_LOW, ROBOSAIL_SAIL_RC_HIGH,
+                    ROBOSAIL_SAIL_SERVO_LOW, ROBOSAIL_SAIL_SERVO_HIGH);
 
 
   // Print out the values for debug.
   Serial.print("Rudder pulse from receiver: ");
   Serial.print(rudderPulseWidth);
   Serial.print("\t Mapped Angle: ");
-  Serial.print(rudderServoOut);
+  Serial.print(rudderDegrees);
 
   Serial.print("\t Sail pulse from receiver: ");
   Serial.print(sailPulseWidth);
   Serial.print("\t Mapped Angle: ");
-  Serial.println(sailServoOut);
+  Serial.println(sailDegrees);
 
-  // adjust the servo values from desired angles on the Robosail boat
-  // to appropriate values for the servos, then command the servos to move
-  // the Rudder servo motor ranges from 0 to 180 with 90 deg in the center
-  // the Sailwinch servo is at ~ 55 deg when full-in, which we think of as 0 deg,
-  //  and ~125 deg when full out, which we thnk of as 90 deg
-  rudderServoOut = map(rudderServoOut, -90, 90, 0, 180);
+  // Command the servos to move
   rudderServo.write(rudderServoOut);
-  sailServoOut = map(sailServoOut, 0, 90, 55, 125);
   sailServo.write(sailServoOut);
 
 }
