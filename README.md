@@ -261,7 +261,6 @@ Find these programs in the "hardware --> compass" folder and use in this order:
 2. compassCalibration - Code to use to determine hard iron calibration values for other the programs
 3. compassBasicwithCalibration - same as CompassBasic with hardiron correction
 4. compassTest - Tilt-compensated compass with hard-iron correction.  Uses the Orientation library
-5. compassBasicwithCalibrationandTilt - same as CompassTest, but does the tilt-compensation in the code and does NOT require the Orientation library
 
 Find Orientation libraries in the folder Libraries --> Orientation:
 	Orientation.cpp - Library for tilt calibrated compass readings

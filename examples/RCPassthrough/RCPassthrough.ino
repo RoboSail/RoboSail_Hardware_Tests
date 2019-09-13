@@ -56,10 +56,10 @@ void loop() {
   // pulseIn returns the width of the command pulse in microseconds.
   rudderPulseWidth = pulseIn(ROBOSAIL_PIN_RUDDER_RC, HIGH);
   // Calculate the servo position in degrees.
-  rudderServoOut = map(rudderPulseWidth, ROBOSAIL_RUDDER_LOW, ROBOSAIL_RUDDER_HIGH, -60, 60);
+  rudderServoOut = map(rudderPulseWidth, ROBOSAIL_RUDDER_RC_LOW, ROBOSAIL_RUDDER_RC_HIGH, -60, 60);
 
   sailPulseWidth = pulseIn(ROBOSAIL_PIN_SAIL_RC, HIGH);
-  sailServoOut = map(sailPulseWidth, ROBOSAIL_SAIL_LOW, ROBOSAIL_SAIL_HIGH, 0, 90);
+  sailServoOut = map(sailPulseWidth, ROBOSAIL_SAIL_RC_LOW, ROBOSAIL_SAIL_RC_HIGH, 0, 90);
 
 
   // Print out the values for debug.
@@ -84,4 +84,3 @@ void loop() {
   sailServo.write(sailServoOut);
 
 }
-

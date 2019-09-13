@@ -37,7 +37,7 @@ void loop() {
   windPulseWidth = pulseIn(ROBOSAIL_PIN_WIND, HIGH);
 
   // Convert the wind angle to degrees from PWM values.  Range -180 to +180
-  windAngle = map(windPulseWidth, ROBOSAIL_WIND_LOW, ROBOSAIL_WIND_HIGH, 180, -180);
+  windAngle = map(windPulseWidth, ROBOSAIL_WIND_SENSOR_LOW, ROBOSAIL_WIND_SENSOR_HIGH, 180, -180);
 
   // The sensor occasionally returns out of bounds values, so make sure that
   //   it fits within our desired range.
@@ -53,4 +53,3 @@ void loop() {
   // add delay to not overwhelm serial monitor (or the user!)
   delay(200);
 }
-
