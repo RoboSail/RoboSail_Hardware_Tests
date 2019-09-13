@@ -6,6 +6,7 @@
    0 means the sail is fully in, and 90 means the sail is
    fully out (at 90 degrees).
    Note that the Sail Servo actual positions for full in and out
+   (ROBOSAIL_SAIL_SERVO_LOW and ROBOSAIL_SAIL_SERVO_HIGH respectively)
    for 1 boat are approx 55 and 125, and they may vary for other boats.
    Use this code to check these values and adjust as necessary.
    Then map the user's desired angles to these values.
@@ -23,10 +24,17 @@ int position = 0;
 
 void driveSailServo(int sailPos)
 {
-  if ((sailPos >= 0) && (sailPos <= 90))  // the command in degrees is valid
+  if ((sailPos >= ROBOSAIL_SAIL_ANGLE_LOW) && (sailPos <= ROBOSAIL_SAIL_ANGLE_HIGH))  // the command in degrees is valid
   {
-    sailPos = map(sailPos, 0, 90, 55, 125);
-    sailServo.write(sailPos);
+    int servoPos = map(sailPos,
+                       ROBOSAIL_SAIL_ANGLE_LOW, ROBOSAIL_SAIL_ANGLE_HIGH,
+                       ROBOSAIL_SAIL_SERVO_LOW, ROBOSAIL_SAIL_SERVO_HIGH);
+    sailServo.write(servoPos);
+
+    // print the converted value
+    Serial.print("Comand sent to Servo: ");
+    Serial.println(servoPos);
+    Serial.println();
   }
   else
   {
@@ -42,7 +50,11 @@ void setup() {
 }
 
 void loop() {
-  Serial.print("Enter desired sail angle (0 to 90): ");
+  Serial.print("Enter desired sail angle (");
+  Serial.print(ROBOSAIL_SAIL_ANGLE_LOW);
+  Serial.print(" to ");
+  Serial.print(ROBOSAIL_SAIL_ANGLE_HIGH);
+  Serial.print("): ");
   while (Serial.available() == 0)
   {}
   position = Serial.parseInt();    // convert input to integer
@@ -51,13 +63,4 @@ void loop() {
   // drive servo to position in variable 'position'
   //call function to do error checking and send command to servo
   driveSailServo(position);
-
-  // convert from desired sail angle to servo angle
-  position = map(position, 0, 90, 55, 125);
-
-  // print the converted value
-  Serial.print("Comand sent to Servo: ");
-  Serial.println(position);
-  Serial.println();
 }
-

@@ -21,10 +21,17 @@ int position = 0;
 
 void driveRudderServo(int rudderPos)
 {
-  if ((rudderPos >= -50) && (rudderPos <= 50))
+  if ((rudderPos >= ROBOSAIL_RUDDER_ANGLE_LOW) && (rudderPos <= ROBOSAIL_RUDDER_ANGLE_HIGH))
   {
-    rudderPos = map(rudderPos, -90, 90, 0, 180);
-    rudderServo.write(rudderPos);
+    int servoPos = map(rudderPos,
+                       ROBOSAIL_RUDDER_ANGLE_LOW, ROBOSAIL_RUDDER_ANGLE_HIGH,
+                       ROBOSAIL_RUDDER_SERVO_LOW, ROBOSAIL_RUDDER_SERVO_HIGH);
+    rudderServo.write(servoPos);
+
+    // print out what was calculated
+    Serial.print("Command sent to Servo: ");
+    Serial.println(servoPos);
+    Serial.println();
   }
   else
   {
@@ -40,23 +47,17 @@ void setup() {
 }
 
 void loop() {
-  Serial.print("Enter desired rudder angle (-50 to 50): ");
+  Serial.print("Enter desired rudder angle (");
+  Serial.print(ROBOSAIL_RUDDER_ANGLE_LOW);
+  Serial.print(" to ");
+  Serial.print(ROBOSAIL_RUDDER_ANGLE_HIGH);
+  Serial.print("): ");
   while (Serial.available() == 0)
   {}
   position = Serial.parseInt();   // convert input to integer
   Serial.println(position);      // print what was entered
 
-
   // drive servo to position in variable 'position'
   //call function to do error checking and send command to servo
   driveRudderServo(position);
-
-  // convert from rudder angle to servo angle
-  position = map(position, -90, 90, 0, 180);
-
-  // print out what was calculated
-  Serial.print("Command sent to Servo: ");
-  Serial.println(position);
-  Serial.println();
 }
-
