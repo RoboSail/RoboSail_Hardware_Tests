@@ -25,10 +25,10 @@ Pins are configured in RoboSail_Hardware.h
 
 // variables to hold input and output values
 int rudderPulseWidth;
-int rudderDegrees;
+int rudderPosition;
 int rudderServoOut;
 int sailPulseWidth;
-int sailDegrees;
+int sailPosition;
 int sailServoOut;
 
 //create servo objects
@@ -60,12 +60,12 @@ void loop() {
   sailPulseWidth = pulseIn(ROBOSAIL_PIN_SAIL_RC, HIGH);
 
   // Calculate the commanded positions in degrees.
-  rudderDegrees = map(rudderPulseWidth,
-                      ROBOSAIL_RUDDER_RC_LOW, ROBOSAIL_RUDDER_RC_HIGH,
-                      ROBOSAIL_RUDDER_ANGLE_LOW, ROBOSAIL_RUDDER_ANGLE_HIGH);
-  sailDegrees = map(sailPulseWidth,
-                    ROBOSAIL_SAIL_RC_LOW, ROBOSAIL_SAIL_RC_HIGH,
-                    ROBOSAIL_SAIL_ANGLE_LOW, ROBOSAIL_SAIL_ANGLE_HIGH);
+  rudderPosition = map(rudderPulseWidth,
+                       ROBOSAIL_RUDDER_RC_LOW, ROBOSAIL_RUDDER_RC_HIGH,
+                       ROBOSAIL_RUDDER_ANGLE_LOW, ROBOSAIL_RUDDER_ANGLE_HIGH);
+  sailPosition = map(sailPulseWidth,
+                     ROBOSAIL_SAIL_RC_LOW, ROBOSAIL_SAIL_RC_HIGH,
+                     ROBOSAIL_SAIL_ANGLE_LOW, ROBOSAIL_SAIL_ANGLE_HIGH);
 
   // calculate the commanded positions into servo angles on the Robosail boat
   // the Rudder servo motor ranges from 0 to 180 with 90 deg in the center
@@ -80,15 +80,20 @@ void loop() {
 
 
   // Print out the values for debug.
-  Serial.print("Rudder pulse from receiver: ");
-  Serial.print(rudderPulseWidth);
-  Serial.print("\t Mapped Angle: ");
-  Serial.print(rudderDegrees);
-
-  Serial.print("\t Sail pulse from receiver: ");
+  Serial.print("Sail, RC: ");
   Serial.print(sailPulseWidth);
-  Serial.print("\t Mapped Angle: ");
-  Serial.println(sailDegrees);
+  Serial.print("  desired angle: ");
+  Serial.print(sailPosition);
+  Serial.print("  to servo: ");
+  Serial.print(sailServoOut);
+
+  Serial.print("  Rudder, RC: ");
+  Serial.print(rudderPulseWidth);
+  Serial.print("  desired angle: ");
+  Serial.print(rudderPosition);
+  Serial.print("  to servo: ");
+  Serial.println(rudderServoOut);
+
 
   // Command the servos to move
   rudderServo.write(rudderServoOut);
