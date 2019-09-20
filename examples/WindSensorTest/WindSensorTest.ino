@@ -28,6 +28,11 @@ void setup() {
 
   // Set WindSensor on digital input pins
   pinMode(ROBOSAIL_PIN_WIND, INPUT);
+
+  // Print the boat's name (as defined in RoboSail_Hardware.h as an
+  // explicit check that the settings file is being included properly
+  Serial.print("This boat is "); Serial.println(ROBOSAIL_BOAT_NAME);
+  Serial.println(__FILE__);  // prints the name (path) of this sketch
 }
 
 void loop() {

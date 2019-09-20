@@ -17,6 +17,7 @@ by setting variables in the code to true or false.
 #include <Wire.h>
 #include <Adafruit_Sensor.h>
 #include <Adafruit_LSM303_U.h>
+#include <RoboSail_Hardware.h>
 
 /* Assign a unique ID to this sensor at the same time */
 Adafruit_LSM303_Mag_Unified mag = Adafruit_LSM303_Mag_Unified(12345);
@@ -41,7 +42,11 @@ void displaySensorDetails()
 void setup(void)
 {
   Serial.begin(115200);
-  Serial.println("Magnetometer + Accelerometer Test"); Serial.println("");
+
+  // Print the boat's name (as defined in RoboSail_Hardware.h as an
+  // explicit check that the settings file is being included properly
+  Serial.print("This boat is "); Serial.println(ROBOSAIL_BOAT_NAME);
+  Serial.println(__FILE__);  // prints the name (path) of this sketch
 
   /* Initialise the sensor */
   if(!mag.begin() || !accel.begin())
@@ -88,4 +93,3 @@ void loop(void)
 
   delay(1000);
 }
-

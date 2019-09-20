@@ -45,7 +45,11 @@ void displayValues()
 void setup(void)
 {
   Serial.begin(115200);
-  Serial.println("Accelerometer Test"); Serial.println("");
+
+  // Print the boat's name (as defined in RoboSail_Hardware.h as an
+  // explicit check that the settings file is being included properly
+  Serial.print("This boat is "); Serial.println(ROBOSAIL_BOAT_NAME);
+  Serial.println(__FILE__);  // prints the name (path) of this sketch
 
   /* Initialise the sensor */
   if(!accel.begin())
@@ -64,4 +68,3 @@ void loop()
   displayValues();
   delay(500);
 }
-

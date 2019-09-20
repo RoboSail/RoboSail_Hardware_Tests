@@ -80,6 +80,11 @@ void setup() {
   // Sets up communication with the serial monitor
   Serial.begin(115200);
   rudderServo.attach(ROBOSAIL_PIN_RUDDER_SERVO);
+
+  // Print the boat's name (as defined in RoboSail_Hardware.h as an
+  // explicit check that the settings file is being included properly
+  Serial.print("This boat is "); Serial.println(ROBOSAIL_BOAT_NAME);
+  Serial.println(__FILE__);  // prints the name (path) of this sketch
 }
 
 void loop() {

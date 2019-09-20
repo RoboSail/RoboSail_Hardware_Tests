@@ -44,7 +44,11 @@ void displaySensorDetails()
 void setup(void)
 {
   Serial.begin(115200);
-  Serial.println("Magnetometer + Accelerometer Test with Hard Iron Calibration"); Serial.println("");
+
+  // Print the boat's name (as defined in RoboSail_Hardware.h as an
+  // explicit check that the settings file is being included properly
+  Serial.print("This boat is "); Serial.println(ROBOSAIL_BOAT_NAME);
+  Serial.println(__FILE__);  // prints the name (path) of this sketch
 
   /* Enable auto-gain */
   mag.enableAutoRange(true);
@@ -105,4 +109,3 @@ void loop(void)
 
   delay(500);
 }
-

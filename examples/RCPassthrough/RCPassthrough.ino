@@ -48,9 +48,13 @@ void declarePins()
 
 void setup() {
   Serial.begin(115200);
-  Serial.println("\nRCPassThrough code - RoboSail");
-    // Set RC receiver and WindSensor on digital input pins
-    declarePins();
+  // Set RC receiver and WindSensor on digital input pins
+  declarePins();
+
+  // Print the boat's name (as defined in RoboSail_Hardware.h as an
+  // explicit check that the settings file is being included properly
+  Serial.print("This boat is "); Serial.println(ROBOSAIL_BOAT_NAME);
+  Serial.println(__FILE__);  // prints the name (path) of this sketch
 }
 
 void loop() {

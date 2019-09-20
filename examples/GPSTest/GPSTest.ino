@@ -123,8 +123,6 @@ void setup()
 {
   // initialize Serial console
   Serial.begin(115200);
-  Serial.println("GPS test code");
-  Serial.println();
 
   // 9600 NMEA is the default baud rate for Adafruit MTK GPS's
   GPS.begin(9600);
@@ -137,6 +135,11 @@ void setup()
 
   // activate TIMER0 interrupt which goes off every 1 millisecond
   enableInterrupt();
+
+  // Print the boat's name (as defined in RoboSail_Hardware.h as an
+  // explicit check that the settings file is being included properly
+  Serial.print("This boat is "); Serial.println(ROBOSAIL_BOAT_NAME);
+  Serial.println(__FILE__);  // prints the name (path) of this sketch
 }
 
 void loop() // run over and over again
@@ -161,5 +164,3 @@ void loop() // run over and over again
   delay(2000);
 
 }
-
-
