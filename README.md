@@ -101,28 +101,48 @@ To calculate the values and tune the boat follow these steps:
 5. Move the right stick (the "steering") all the way right. Record the rudder value as `ROBOSAIL_RUDDER_RC_LOW`.
 6. Move the right stick all the way left. Record the rudder value as `ROBOSAIL_RUDDER_RC_HIGH`.
 
+Note that the ranges for each axis (minimum and maximum values measured) are listed in the `RCReader.ino` output, so simply moving the sticks to their extreme ranges will characterize them.
 
-## Characterize the Sail Servo
+Note that The rudder measurement additionally shows the average ("ctr") value of the range, so that you can adjust the trim accordingly -- you want the resting position of the stick to correspond to the center rudder position.
+
+
+## Calibrate the Servos
+
+### Calibrate the Sail Servo
 
 Make sure you have a hex key tool.
 
 1. Loosen the mainsheet and jibsheet from their booms so that they can slide freely.
-2. Run [RCPassthrough.ino](examples/RCPassthrough/RCPassthrough.ino) and open a terminal to examine the measured values.
-3. Move the left stick all the way down so that the sheets are hauled in.
-4. Record the RC value as `ROBOSAIL_SAIL_SERVO_LOW`.
-5. Fix the mainsheet and jibsheet attachments to their booms so that the sails are on the boat centerline.
-6. Gradually move the left stick up until the mainsail is at 90 degrees from the boat.
-7. Record the value as `ROBOSAIL_SAIL_SERVO_HIGH`.  If the sail does not reach 90 degrees, increase `ROBOSAIL_SAIL_SERVO_HIGH` and recompile/rerun the program.
-8. To test the characterization, run `SailServoTest.ino`.  Enter various desired angles and verify that the sail responds appropriately.
+2. Run [SailServoTest.ino](examples/SailServoTest/SailServoTest.ino) and open the Serial Terminal to interact with it.
+3. Set a servo position value of 70 -- it should be well within the available range of motion for the sail
+4. Gradually increase the position until the mainsail is at 90 degrees from the boat.
+5. Record this position as `ROBOSAIL_SAIL_SERVO_HIGH`.
+6. Record the sail angle (if less than 90 degrees) as `ROBOSAIL_SAIL_ANGLE_HIGH`.  In other words, it should be 90 unless there is a physical inability for it to reach 90 degrees.
+7. Gradually decrese the servo position until the mainsheet and/or jibsheet are hauled all the way in.
+8. Record this position as `ROBOSAIL_SAIL_SERVO_LOW`
+9. Record the sail angle (if greater than 0 degrees) as `ROBOSAIL_SAIL_ANGLE_LOW`
 
 
-## Characterize the Rudder Servo
+### Calibrate the Rudder Servo
+
+1. Run [RudderServoTest.ino](examples/RudderServoTest/RudderServoTest.ino) and open the Serial Terminal to interact with it.
+2. Set a servo position value of 90 -- it should correspond roughly to the center point of the rudder.
+3. Gradually increase the position until the servo is at the limit of its ablity to move the rudder (based on its linkages).
+4. Record this position as `ROBOSAIL_RUDDER_SERVO_HIGH`.
+5. Record the rudder angle as `ROBOSAIL_RUDDER_ANGLE_HIGH` (this number should be negative).
+6. Gradually decrease the position until the servo is at the limit of its ability to move the rudder in the opposite direction.
+7. Record this position as `ROBOSAIL_RUDDER_SERVO_LOW`.
+8. Record the rudder angle as `ROBOSAIL_RUDDER_ANGLE_LOW` (this number should be positive).
+
+
+### Test the Servo Calibration
 
 1. Run [RCPassthrough.ino](examples/RCPassthrough/RCPassthrough.ino) and open a terminal to examine the measured values.
-2. Move the right stick right until the rudder is at its maximum deflection. Record the rudder value as `ROBOSAIL_RUDDER_SERVO_LOW`.
-3. Move the right stick left until the rudder is at its maximum deflection. Record the rudder value as `ROBOSAIL_RUDDER_SERVO_HIGH`.
-4. If the rudder does not reach its maximum deflect, lower `ROBOSAIL_RUDDER_SERVO_LOW`, raise `ROBOSAIL_RUDDER_SERVO_HIGH`, and recompile/rerun the program.
-5. To test the characterization, run `RudderServoTest.ino`.  Enter various desired angles and verify that the rudder responds appropriately.
+2. Verify that moving the right stick right will place the rudder at its maximum rightward position (turning to starboard) but not put strain on the servo.
+3. Verify that moving the right stick left will place the rudder at its maximum leftward position (turning to port) but not put strain on the servo.
+4. Verify that the rudder returns to a center position when the right stick returns to its center position.
+5. Verify that moving the left stick all they way up will allow the sails to move out to 90 degrees from the boat.
+6. Verify that moving the left stick all the way down will haul the sails in to the angle you recorded as `ROBOSAIL_SAIL_ANGLE_LOW`.
 
 
 ## Characterize the Wind Sensor
@@ -146,16 +166,11 @@ For Compass Heading there is an electronic magnetometer board that also includes
 
 Hardiron calibration must be performed. The process is simple:
 
-1. Mount the magnetometer in the location that you intend to use it at
-4. Average the minimum and maximum for each axis. This will give you your hardiron x,y,z offsets.
-
-(Need more data here about tilt-compensation)
-
 1. Set the compass declination in the variable `ROBOSAIL_DECLINATION` using the source data at http://www.ngdc.noaa.gov/geomag-web/#igrfwmm ; a reasonable value should be something like `-14.6067` in the Boston area.
 2. Run [compassBasic.ino](examples/compassBasic/compassBasic.ino)and verify hardware and connections prints raw accelerometer and magnetometer readings to the screen
 3. Run [compassCalibration.ino](examples/compassCalibration/compassCalibration.ino) which will help to determine hard iron calibration values
 4. Rotate the body through all possible orientations
-5. Record the minimum and maximum for each axis of the magnetometer as `ROBOSAIL_HARDIRON_X`, `ROBOSAIL_HARDIRON_Y`, and `ROBOSAIL_HARDIRON_Z`
+5. Record the averaged minimum and maximum for each axis of the magnetometer as `ROBOSAIL_HARDIRON_X`, `ROBOSAIL_HARDIRON_Y`, and `ROBOSAIL_HARDIRON_Z`
 6. Run [compassBasicwithCalibration.ino](examples/compassBasicwithCalibration/compassBasicwithCalibration.ino) and verify the corrected values
 7. Run [compassTest.ino](examples/compassTest/compassTest.ino) and verify the Tilt-compensated compass with hard-iron correction.
 

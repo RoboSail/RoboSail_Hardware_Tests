@@ -20,7 +20,6 @@ You will need a set of pliers and probably several tries.
 
 #include <RoboSail_Hardware.h>
 
-
 int windAngle = 0;
 int windPulseWidth = 0;
 
