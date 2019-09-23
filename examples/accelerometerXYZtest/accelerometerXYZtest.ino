@@ -1,5 +1,5 @@
-/* XYZAccelTest rev 7/30/2017
-© 2014-2017 RoboSail
+/* XYZAccelTest rev 9/21/2019
+© 2014-2019 RoboSail
 This program reads the LSM303 Magnetometer/Accelerometer module through
 the Arduino Mega. It reads the raw values for X, Y, Z from both the
 Acclerometer and prints them to the screen.
@@ -19,35 +19,13 @@ Adafruit_LSM303_Accel_Unified accel = Adafruit_LSM303_Accel_Unified(54321);
 
 sensors_event_t event; //define event
 
-void displaySensorDetails()
-{
-  sensor_t sensor;
-  accel.getSensor(&sensor);
-  Serial.println("------------------------------------");
-  Serial.print  ("Sensor:       "); Serial.println(sensor.name);
-  Serial.print  ("Driver Ver:   "); Serial.println(sensor.version);
-  Serial.print  ("Unique ID:    "); Serial.println(sensor.sensor_id);
-  Serial.print  ("Max Value:    "); Serial.print(sensor.max_value); Serial.println(" m/s^2");
-  Serial.print  ("Min Value:    "); Serial.print(sensor.min_value); Serial.println(" m/s^2");
-  Serial.print  ("Resolution:   "); Serial.print(sensor.resolution); Serial.println(" m/s^2");
-  Serial.println("------------------------------------");
-  Serial.println("");
-  delay(500);
-}
-
-void displayValues()
-{  /* Display the results (acceleration is measured in m/s^2) */
-  Serial.print("X: "); Serial.print(event.acceleration.x); Serial.print("  ");
-  Serial.print("Y: "); Serial.print(event.acceleration.y); Serial.print("  ");
-  Serial.print("Z: "); Serial.print(event.acceleration.z); Serial.print("  "); Serial.println("m/s^2 ");
-}
 
 void setup(void)
 {
   Serial.begin(115200);
   Serial.println("Accelerometer Test"); Serial.println("");
 
-  /* Initialise the sensor */
+  /* Initialize the sensor */
   if(!accel.begin())
   {
     /* There was a problem detecting the ADXL345 ... check your connections */
@@ -65,3 +43,25 @@ void loop()
   delay(500);
 }
 
+void displayValues()
+{  /* Display the results (acceleration is measured in m/s^2) */
+  Serial.print("X: "); Serial.print(event.acceleration.x); Serial.print("  ");
+  Serial.print("Y: "); Serial.print(event.acceleration.y); Serial.print("  ");
+  Serial.print("Z: "); Serial.print(event.acceleration.z); Serial.print("  "); Serial.println("m/s^2 ");
+}
+
+void displaySensorDetails()
+{
+  sensor_t sensor;
+  accel.getSensor(&sensor);
+  Serial.println("------------------------------------");
+  Serial.print  ("Sensor:       "); Serial.println(sensor.name);
+  Serial.print  ("Driver Ver:   "); Serial.println(sensor.version);
+  Serial.print  ("Unique ID:    "); Serial.println(sensor.sensor_id);
+  Serial.print  ("Max Value:    "); Serial.print(sensor.max_value); Serial.println(" m/s^2");
+  Serial.print  ("Min Value:    "); Serial.print(sensor.min_value); Serial.println(" m/s^2");
+  Serial.print  ("Resolution:   "); Serial.print(sensor.resolution); Serial.println(" m/s^2");
+  Serial.println("------------------------------------");
+  Serial.println("");
+  delay(500);
+}

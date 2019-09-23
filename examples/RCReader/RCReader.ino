@@ -1,5 +1,5 @@
-/* RCReader rev rev 7/30/2017
-© 2014-2017 RoboSail
+/* RCReader rev rev 9/21/2019
+© 2014-2019 RoboSail
 This program puts the Arduino micro-computer in the RC (Radio Control) system
 It takes in the control signals coming in from the Receiver and
 displays the following to the Serial Monitor:
@@ -12,12 +12,14 @@ This program helps the user determine
   - if they are reading good signals from the receiver (range of 1000 - 2000)
   - if the Arduino computer is functioning correctly
 
+When automatic control is implemented, the signals from the RC transmitter can 
+be used to send switch signals or other cues to the boat to switch modes of operation.
+
 Rudder and Sail data from the RC receiver are read in on
 digital pins 2 and 3 respectively.
 */
 
-#include <Servo.h>
-#include <RoboSail_Hardware.h>
+#include <RoboSail_Hardware.h> //has pin definitions
 
 // variables to hold input values
 int rudderPulseWidth;
@@ -45,4 +47,3 @@ void loop() {
   Serial.println(rudderPulseWidth);
 
 }
-

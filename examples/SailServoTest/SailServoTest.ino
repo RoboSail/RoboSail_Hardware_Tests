@@ -1,5 +1,5 @@
-/* SailServoTest rev 7/30/2017
-   © 2014-2017 RoboSail
+/* SailServoTest rev 9/21/2019
+   © 2014-2019 RoboSail
    Test the various sail positions available by driving the
    sail servo to positons entered by the user.
    The user types in the desired angle through the Serial Monitor.
@@ -15,33 +15,12 @@
 */
 
 #include <Servo.h>
-#include <RoboSail_Hardware.h>
+#include <RoboSail_Hardware.h>  // has pin definition
 
 Servo sailServo;    // define servo
 
 // variable to store the servo position
 int position = 0;
-
-void driveSailServo(int sailPos)
-{
-  if ((sailPos >= ROBOSAIL_SAIL_ANGLE_LOW) && (sailPos <= ROBOSAIL_SAIL_ANGLE_HIGH))  // the command in degrees is valid
-  {
-    int servoPos = map(sailPos,
-                       ROBOSAIL_SAIL_ANGLE_LOW, ROBOSAIL_SAIL_ANGLE_HIGH,
-                       ROBOSAIL_SAIL_SERVO_LOW, ROBOSAIL_SAIL_SERVO_HIGH);
-    sailServo.write(servoPos);
-
-    // print the converted value
-    Serial.print("Comand sent to Servo: ");
-    Serial.println(servoPos);
-    Serial.println();
-  }
-  else
-  {
-    Serial.print("ERROR - sail position out of range: ");
-    Serial.println(sailPos);
-  }
-}
 
 void setup() {
   // Sets up communication with the serial monitor
@@ -50,11 +29,7 @@ void setup() {
 }
 
 void loop() {
-  Serial.print("Enter desired sail angle (");
-  Serial.print(ROBOSAIL_SAIL_ANGLE_LOW);
-  Serial.print(" to ");
-  Serial.print(ROBOSAIL_SAIL_ANGLE_HIGH);
-  Serial.print("): ");
+  Serial.print("\nEnter desired sail angle (0 to 90): ");
   while (Serial.available() == 0)
   {}
   position = Serial.parseInt();    // convert input to integer
@@ -63,4 +38,21 @@ void loop() {
   // drive servo to position in variable 'position'
   //call function to do error checking and send command to servo
   driveSailServo(position);
+}
+
+void driveSailServo(int sailPos)
+{
+  if ((sailPos >= 0) && (sailPos <= 90))  // the command in degrees is valid
+  {
+    sailPos = map(sailPos, 0, 90, 55, 125);
+    sailServo.write(sailPos);
+        // print the converted value
+    Serial.print("Command sent to Servo: ");
+    Serial.println(sailPos);
+  }
+  else 
+  {
+    Serial.print("ERROR - sail position out of range: ");
+    Serial.println(sailPos);
+    }
 }

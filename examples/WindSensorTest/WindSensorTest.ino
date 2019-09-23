@@ -1,5 +1,5 @@
-/* WindSensor rev 7/30/2017
-© 2014-2017 RoboSail
+/* WindSensor rev 9/21/2019
+© 2014-2019 RoboSail
 This program reads and displays data from the wind sensor, a continuous rotary
 magnetic encoder with a 10 bit PWM output. (US Digital MA3-P10-25B)
 It is used to verify that the sensor is connected and functioning correctly
@@ -16,9 +16,10 @@ accordingly.  The input data and the corresponding angle are displayed to the se
 Calibrate the WindSensor by rotating the encoder body while keeping the windvane
 pointing forward.  Tighten the encoder body to the mount when the value reads 0.
 You will need a set of pliers and probably several tries.
-*/
 
-#include <RoboSail_Hardware.h>
+The Wind Sensor servo is read on digital pin 7*/
+
+#include <RoboSail_Hardware.h> //has pin definition
 
 
 int windAngle = 0;
@@ -36,15 +37,14 @@ void loop() {
   // pulseIn returns the width of the command pulse in microseconds.
   windPulseWidth = pulseIn(ROBOSAIL_PIN_WIND, HIGH);
 
-  // Convert the wind angle to degrees from PWM values.  Range -180 to +180
+  // Convert the wind angle to degrees from PWM values (nominally 1 - 1023) to range -180 to +180
   // Note that the the low value of the angle corresponds to the high value of the sensor
   windAngle = map(windPulseWidth,
-                  ROBOSAIL_WIND_SENSOR_LOW, ROBOSAIL_WIND_SENSOR_HIGH,
-                  ROBOSAIL_WIND_ANGLE_HIGH, ROBOSAIL_WIND_ANGLE_LOW);
+                  ROBOSAIL_WIND_SENSOR_LOW, ROBOSAIL_WIND_SENSOR_HIGH, 180, -180);
 
   // The sensor occasionally returns out of bounds values, so make sure that
   //   it fits within our desired range.
-  windAngle = constrain(windAngle, ROBOSAIL_WIND_ANGLE_LOW, ROBOSAIL_WIND_ANGLE_HIGH);
+  windAngle = constrain(windAngle, -180, 180);
 
   // Print out the values for debug.
   Serial.print("Pulse from Encoder: ");

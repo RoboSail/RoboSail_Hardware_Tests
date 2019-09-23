@@ -13,7 +13,7 @@ specific to one sailboat's hardware
 // To ensure that settings are being read from this file, you can
 // print the boat name in your setup() function as follows:
 //   Serial.print("This boat is "); Serial.println(ROBOSAIL_BOAT_NAME);
-const String ROBOSAIL_BOAT_NAME = "My Example Boat";
+const String ROBOSAIL_BOAT_NAME = "Diane Example Boat";
 
 /********************** DEVICE INPUT AND OUTPUT ******************************/
 
@@ -77,28 +77,27 @@ const int ROBOSAIL_WIND_SENSOR_LOW  = 0;       // nominal 0
 const int ROBOSAIL_WIND_SENSOR_HIGH = 1023;    // nominal 1023
 
 // Rudder servo limits
-const int ROBOSAIL_RUDDER_SERVO_LOW  = 0;      // nominal 0
-const int ROBOSAIL_RUDDER_SERVO_HIGH = 180;    // nominal 180
+//const int ROBOSAIL_RUDDER_SERVO_LOW  = 0;      // DONT NEED
+//const int ROBOSAIL_RUDDER_SERVO_HIGH = 180;    // DONT NEED
 
 // Sail servo limits
-const int ROBOSAIL_SAIL_SERVO_LOW  = 55;       // nominal 55
-const int ROBOSAIL_SAIL_SERVO_HIGH = 125;      // nominal 125
+const int ROBOSAIL_SAIL_SERVO_LOW  = 55;       // nominal 55, travel stop
+const int ROBOSAIL_SAIL_SERVO_HIGH = 125;      // nominal 125, travel stop
 
 /*************************** HUMAN VALUES ************************************/
-
 // Rudder angle range -- values a human understands
-const int ROBOSAIL_RUDDER_ANGLE_LOW = -90;
-const int ROBOSAIL_RUDDER_ANGLE_HIGH = 90;
+//const int ROBOSAIL_RUDDER_ANGLE_LOW = -90; //NOT CORRECT, DONT NEED
+//const int ROBOSAIL_RUDDER_ANGLE_HIGH = 90; //NOT CORRECT, DONT NEED
 
 // Sail angle range
-const int ROBOSAIL_SAIL_ANGLE_LOW = 0;
-const int ROBOSAIL_SAIL_ANGLE_HIGH = 90;
+//const int ROBOSAIL_SAIL_ANGLE_LOW = 0;   //DONT NEED
+//const int ROBOSAIL_SAIL_ANGLE_HIGH = 90;  //DONT NEED
 
 // Wind angle range
 // As above, note that the range of the angle is inverted with respect to the
 // range of the wind sensor itself
-const int ROBOSAIL_WIND_ANGLE_LOW = -180;
-const int ROBOSAIL_WIND_ANGLE_HIGH = 180;
+//const int ROBOSAIL_WIND_ANGLE_LOW = -180;  //DONT NEED
+//const int ROBOSAIL_WIND_ANGLE_HIGH = 180;  //DONT NEED
 
 /*************************** HARDWARE FUNCTIONS ******************************/
 
